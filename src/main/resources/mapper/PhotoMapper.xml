@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.blog_two.dao.PhotoMapper">
+    <insert id="addPhoto" parameterType="com.guo.blog_two.domain.Photo">
+        insert into t_photo(url,name,picture_date,address,type,is_private)
+        values
+        (#{photo.url},#{photo.name},#{photo.picture_date},#{photo.address},#{photo.type},#{photo.is_private})
+    </insert>
+
+    <select id="getPhotoByPage" resultType="com.guo.blog_two.domain.Photo">
+        select *
+        from t_photo
+        order by  upload_time desc
+        limit #{startIndex},#{size}
+    </select>
+
+    <select id="getAllPhotoNumbers" resultType="java.lang.Integer">
+        select count(*) as number
+        from t_photo
+    </select>
+    <delete id="deleteAPhoto">
+        delete from t_photo
+        where photo_id =#{photo_id}
+    </delete>
+
+    <update id="updatePhoto" parameterType="com.guo.blog_two.domain.Photo">
+        update t_photo
+        <set>
+            name = #{photo.name},
+            picture_date =#{photo.picture_date},
+            type = #{photo.type},
+            is_private = #{photo.is_private},
+            address = #{photo.address}
+        </set>
+        where photo_id = #{photo.photo_id}
+    </update>
+
+    <select id="getPhotoNum" resultType="hashmap">
+        select type,count(*) as num
+        from t_photo
+        group by type
+    </select>
+
+    <select id="getPhotoByType" resultType="com.guo.blog_two.domain.Photo">
+        select *
+        from t_photo
+        where type = #{type}
+        order by upload_time desc
+    </select>
+
+</mapper>

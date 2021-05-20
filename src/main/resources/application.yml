@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://8.129.131.7:3306/blog_two?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: blog_two
+    password: bEbZD6aWc8reJYLY
+  servlet:
+    multipart:
+      max-file-size: 50MB
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.guo.blog_two.domain
+server:
+  port: 8085
+
+
+
+# 文件配置

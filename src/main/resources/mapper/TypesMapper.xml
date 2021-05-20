@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.blog_two.dao.TypesMapper">
+    <select id="getTypeByPage" resultType="com.guo.blog_two.domain.Type">
+
+    </select>
+
+    <select id="getListType" resultType="com.guo.blog_two.domain.Type">
+        select * from t_type where code = 0
+    </select>
+
+    <select id="getListPhotoType" resultType="com.guo.blog_two.domain.Type">
+        select * from t_type where code = 1
+    </select>
+
+    <delete id="deleteTypeById">
+        delete from t_type where id = #{id}
+    </delete>
+
+    <insert id="addType" parameterType="com.guo.blog_two.domain.Type">
+        insert into t_type(name,code)
+        values (#{type.name},#{type.code})
+    </insert>
+
+    <update id="updateType">
+        update t_type
+        <set>
+            name = #{type.name}
+        </set>
+        where id =  #{type.id}
+    </update>
+</mapper>

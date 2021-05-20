@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guo.blog_two.dao.BlogMapper">
+    <select id="getListBlog" resultType="com.guo.blog_two.domain.Blog">
+        select * from blog where pprivate = 0
+    </select>
+    <select id="getBlogByPage" resultType="com.guo.blog_two.domain.Blog">
+        select * from  blog order by update_time desc limit #{startIndex},10
+    </select>
+    <insert id="addBlog" parameterType="com.guo.blog_two.domain.Blog">
+        insert into blog(title,description,update_time,type_name,picture_src,pprivate,publish)
+        values (
+        #{blog.title},
+        #{blog.description},
+        #{blog.update_time},
+        #{blog.type_name},
+        #{blog.picture_src},
+        #{blog.pprivate},
+        #{blog.publish}
+        )
+    </insert>
+
+    <update id="updateBlog" parameterType="com.guo.blog_two.domain.Blog">
+        update blog
+        <set>
+            title = #{blog.title},
+            description = #{blog.description},
+            update_time = #{blog.update_time},
+            type_name = #{blog.type_name},
+            picture_src = #{blog.picture_src},
+            pprivate = #{blog.pprivate},
+            publish = #{blog.publish}
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteBlog">
+        delete from blog where id = #{id}
+    </delete>
+
+    <select id="getAllBlogNumbers" resultType="java.lang.Integer">
+        select count(*) as numbers
+        from blog
+    </select>
+
+    <select id="getBlogTypeNum" resultType="hashmap">
+        select type_name,count(*) as num
+        from blog
+        group by type_name
+    </select>
+
+    <select id="getBlogByTypeName" resultType="com.guo.blog_two.domain.Blog">
+        select *
+        from blog
+        where type_name = #{typeName}
+    </select>
+
+    <select id="getAllYears" resultType="hashmap">
+        SELECT *,count(year) as num
+        FROM (
+        SELECT DATE_FORMAT(update_time,'%Y') AS year
+        FROM blog
+        ) AS t
+        GROUP BY year
+        ORDER BY year DESC;
+    </select>
+
+    <select id="getBlogsByYears" resultType="com.guo.blog_two.domain.Blog">
+        select *
+        from blog
+        where update_time like #{year}
+    </select>
+
+    <select id="getNewBlog" resultType="com.guo.blog_two.domain.Blog">
+        select *
+        from blog
+        order by update_time desc limit 0,4
+    </select>
+</mapper>
